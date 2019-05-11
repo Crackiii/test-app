@@ -8,21 +8,57 @@
 </head>
 <body>
 
-    <div>
-        <ul>
-            <li>Hi</li>
-            <li>This</li>
-            <li>is</li>
-            <li>Nadeem</li>
-            <li>Ahmad</li>
-
-            <!-- I am the khan version -->
-
-            <li>Wow </li>
-            <li>I am </li>
-            <li>Khan</li>
-        </ul>
-    </div>
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
     
 </body>
+
+<script>
+
+    function PopulateData(){
+        this.init = (d) => {
+
+            let table = document.querySelector("table tbody");
+            let data = d.users;
+
+            data.forEach(datum => {
+                if(datum.age >= 30 && datum.age <=40){
+                    table.insertAdjacentHTML("beforeend",
+                        '<tr>'+
+                            '<td>'+datum.name+'</td>  '+  
+                            '<td>'+datum.gender+'</td>  '+
+                            '<td>'+datum.age+'</td>  '+
+                        '<tr>'
+                    )
+                }
+            });
+
+        }
+    }
+
+    window.onload = function(){
+        if(document.readyState === "complete"){
+
+            fetch("./data.json",{
+                method:"GET"
+            }).then(function(r){
+                r.text().then(function(res){
+                    new PopulateData().init(JSON.parse(res));
+                })
+            })
+
+        }
+    }
+
+</script>
+
 </html>
